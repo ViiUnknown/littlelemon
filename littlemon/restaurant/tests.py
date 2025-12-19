@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from rest_framework.test import APIClient
-from restaurant.models import Menu
+from restaurant.models import Menu, Booking
 from restaurant.serializers import MenuSerializer
 
 
@@ -39,3 +39,13 @@ class MenuViewTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data, serializer.data)
+        
+class BookingTest(TestCase):
+    def test_create_booking(self):
+        Booking.objects.create(
+            name="John",
+            no_of_guests=4,
+            booking_date="2025-01-01T18:00:00Z"
+        )
+        self.assertEqual(Booking.objects.count(), 1)
+
